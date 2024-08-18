@@ -3,20 +3,40 @@ package main
 import (
 	"fmt"
 	"os"
-	sort "swap/sortStack"
-	valid "swap/validator"
+	"strconv"
+	"strings"
+	"swap/sortStack"
+	"swap/validator"
 )
 
 func main() {
+	if len(os.Args) < 2 {
+		return
+	}
 	arg := os.Args[1]
-	if valid.Validate(arg) {
-		fmt.Println(arg)
-		for _, i := range arg {
-			k := int(i)
-			data := sort.Stack{Data: []int{k}}
-			data.Push(1)
-		}
-	} else {
+
+	if !validator.Validate(arg) {
 		fmt.Println("Error")
+		return
+	}
+
+	values := strings.Split(arg, " ")
+	a := sortStack.NewStack()
+	b := sortStack.NewStack()
+
+	for _, v := range values {
+		data, err := strconv.Atoi(v)
+		if err != nil {
+			fmt.Println("Error")
+			return
+		}
+		a.Push(data)
+	}
+
+	sortStack.SortS(a, b)
+
+	for len(a.Data) > 0 {
+		value, _ := a.Pop()
+		fmt.Println(value)
 	}
 }
