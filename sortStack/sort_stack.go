@@ -4,17 +4,27 @@ type Stack struct {
 	Data []int
 }
 
-func (s *Stack) Push(data int) {
-	s.Data = append([]int{data}, s.Data...)
+func NewStack() *Stack {
+	return &Stack{Data: []int{}}
+}
+
+var Instructions []string
+
+func Rec(instruction string) {
+	Instructions = append(Instructions, instruction)
+}
+
+func (s *Stack) Push(value int) {
+	s.Data = append([]int{value}, s.Data...)
 }
 
 func (s *Stack) Pop() (int, bool) {
 	if len(s.Data) == 0 {
 		return 0, false
 	}
-	data := s.Data[0]
+	value := s.Data[0]
 	s.Data = s.Data[1:]
-	return data, true
+	return value, true
 }
 
 func (s *Stack) Top() (int, bool) {
@@ -51,6 +61,7 @@ func Pa(a, b *Stack) {
 	data, ok := b.Pop()
 	if ok {
 		a.Push(data)
+		Rec("pa")
 	}
 }
 
@@ -58,46 +69,56 @@ func Pb(a, b *Stack) {
 	data, ok := a.Pop()
 	if ok {
 		b.Push(data)
+		Rec("pb")
 	}
 }
 
 func Sa(a *Stack) {
 	a.Swap()
+	Rec("sa")
 }
 
 func Sb(b *Stack) {
 	b.Swap()
+	Rec("sb")
 }
 
 func Ss(a, b *Stack) {
 	Sa(a)
 	Sb(b)
+	Rec("ss")
 }
 
 func Ra(a *Stack) {
 	a.Rotate()
+	Rec("ra")
 }
 
 func Rb(b *Stack) {
 	b.Rotate()
+	Rec("rb")
 }
 
 func Rr(a, b *Stack) {
 	Ra(a)
 	Rb(b)
+	Rec("rr")
 }
 
 func Rra(a *Stack) {
 	a.ReverseRotate()
+	Rec("rra")
 }
 
 func Rrb(b *Stack) {
 	b.ReverseRotate()
+	Rec("rrb")
 }
 
 func Rrr(a, b *Stack) {
 	Rra(a)
 	Rrb(b)
+	Rec("rrr")
 }
 
 func IsSorted(s *Stack) bool {
@@ -112,25 +133,29 @@ func IsSorted(s *Stack) bool {
 	return true
 }
 
-func SplitS(a, b *Stack) {
-	mid := (len(a.Data)) / 2
-	for i := 0; i < mid; i++ {
-		Pb(a, b)
-	}
-}
-
-func MergeS(a, b *Stack) {
-	for len(b.Data) > 0 {
-		Pb(a, b)
-	}
-}
-
 func SortS(a, b *Stack) {
 	if len(a.Data) <= 1 {
 		return
 	}
-	SplitS(a, b)
-	SortS(a, b)
-	SortS(b, a)
-	MergeS(a, b)
+
+	for len(a.Data) > 0 {
+		value, _ := a.Pop()
+
+		for len(b.Data) > 0 {
+			topB, _ := b.Top()
+			if topB > value {
+				temp, _ := b.Pop()
+				a.Push(temp)
+			} else {
+				break
+			}
+		}
+
+		b.Push(value)
+	}
+
+	for len(b.Data) > 0 {
+		value, _ := b.Pop()
+		a.Push(value)
+	}
 }
