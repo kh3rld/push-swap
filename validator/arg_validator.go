@@ -10,25 +10,18 @@ func Validate(s string) (bool, error) {
 	str := strings.TrimSpace(s)
 	num, err := strconv.Atoi(str)
 	if err != nil {
-		return false, fmt.Errorf("Error")
-	} else {
-		if !Duplicate(strconv.Itoa(num)) {
-			return true, nil
-		}
+		return false, fmt.Errorf("error converting string to integer: %w", err)
 	}
-	return false, nil
+	return !Duplicate(strconv.Itoa(num)), nil
 }
 
 func Duplicate(s string) bool {
-	count := 0
 	seen := make(map[rune]bool)
-	for _, char := range s {
-		if seen[char] {
-			count++
+	for _, c := range s {
+		if seen[c] {
 			return true
 		}
-		seen[char] = true
+		seen[c] = true
 	}
-
 	return false
 }
