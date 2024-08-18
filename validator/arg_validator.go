@@ -1,18 +1,17 @@
 package Validator
 
 import (
-	"fmt"
 	"strconv"
 	"strings"
 )
 
-func Validate(s string) (bool, error) {
+func Validate(s string) bool {
 	str := strings.TrimSpace(s)
 	num, err := strconv.Atoi(str)
 	if err != nil {
-		return false, fmt.Errorf("error converting string to integer: %w", err)
+		return false
 	}
-	return !Duplicate(strconv.Itoa(num)), nil
+	return !Duplicate(strconv.Itoa(num))
 }
 
 func Duplicate(s string) bool {
