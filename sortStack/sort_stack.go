@@ -99,3 +99,38 @@ func Rrr(a, b *Stack) {
 	Rra(a)
 	Rrb(b)
 }
+
+func IsSorted(s *Stack) bool {
+	if len(s.Data) < 2 {
+		return true
+	}
+	for i := 0; i < len(s.Data)-1; i++ {
+		if s.Data[i] > s.Data[i+1] {
+			return false
+		}
+	}
+	return true
+}
+
+func SplitS(a, b *Stack) {
+	mid := (len(a.Data)) / 2
+	for i := 0; i < mid; i++ {
+		Pb(a, b)
+	}
+}
+
+func MergeS(a, b *Stack) {
+	for len(b.Data) > 0 {
+		Pb(a, b)
+	}
+}
+
+func SortS(a, b *Stack) {
+	if len(a.Data) <= 1 {
+		return
+	}
+	SplitS(a, b)
+	SortS(a, b)
+	SortS(b, a)
+	MergeS(a, b)
+}
