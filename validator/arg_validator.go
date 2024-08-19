@@ -1,34 +1,30 @@
-package Validator
+package validator
 
 import (
-	"fmt"
 	"strconv"
 	"strings"
 )
 
-func Validate(s string) (bool, error) {
-	str := strings.TrimSpace(s)
-	num, err := strconv.Atoi(str)
-	if err != nil {
-		return false, fmt.Errorf("Error")
-	} else {
-		if !Duplicate(strconv.Itoa(num)) {
-			return true, nil
+func Validate(s string) bool {
+	str := strings.Fields(s)
+	var b bool
+	for _, x := range str {
+		num, err := strconv.Atoi(x)
+		if err != nil {
+			return false
 		}
+		b = !Duplicate(strconv.Itoa(num))
 	}
-	return false, nil
+	return b
 }
 
 func Duplicate(s string) bool {
-	count := 0
 	seen := make(map[rune]bool)
-	for _, char := range s {
-		if seen[char] {
-			count++
+	for _, c := range s {
+		if seen[c] {
 			return true
 		}
-		seen[char] = true
+		seen[c] = true
 	}
-
 	return false
 }
