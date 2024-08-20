@@ -5,26 +5,18 @@ import (
 	"strings"
 )
 
-func Validate(s string) bool {
-	str := strings.Fields(s)
-	var b bool
-	for _, x := range str {
-		num, err := strconv.Atoi(x)
+func Validate(arg string) bool {
+	str := strings.Split(arg, " ")
+	seen := make(map[int]struct{})
+	for _, v := range str {
+		num, err := strconv.Atoi(v)
 		if err != nil {
 			return false
 		}
-		b = !Duplicate(strconv.Itoa(num))
-	}
-	return b
-}
-
-func Duplicate(s string) bool {
-	seen := make(map[rune]bool)
-	for _, c := range s {
-		if seen[c] {
-			return true
+		if _, exists := seen[num]; exists {
+			return false
 		}
-		seen[c] = true
+		seen[num] = struct{}{}
 	}
-	return false
+	return true
 }
