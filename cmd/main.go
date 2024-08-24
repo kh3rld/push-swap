@@ -5,38 +5,46 @@ import (
 	"os"
 	"strconv"
 	"strings"
+
 	"swap/sortStack"
 	"swap/validator"
 )
+
+type Stack struct {
+	A []int
+	B []int
+}
 
 func main() {
 	if len(os.Args) < 2 {
 		return
 	}
-	arg := os.Args[1]
+	stack := sortStack.Stack{
+		A: []int{},
+		B: []int{},
+	}
 
-	if !validator.Validate(arg) {
+	if !validator.Validate(os.Args[1]) {
 		fmt.Println("Error")
 		return
 	}
-
-	values := strings.Split(arg, " ")
-	a := sortStack.NewStack()
-	b := sortStack.NewStack()
-
-	for _, v := range values {
-		data, err := strconv.Atoi(v)
+	args := strings.Split(os.Args[1], " ")
+	for _, v := range args {
+		arg, err := strconv.Atoi(v)
 		if err != nil {
 			fmt.Println("Error")
 			return
 		}
-		a.Push(data)
+		stack.A = append(stack.A, arg)
 	}
 
-	sortStack.SortS(a, b)
+	fmt.Println("initial stack A:", stack.A)
+	instructions := sortStack.PushSwap(&stack)
 
-	for len(a.Data) > 0 {
-		value, _ := a.Pop()
-		fmt.Println(value)
+	fmt.Println("Instructions:")
+
+	for _, instruction := range instructions {
+		fmt.Println(instruction)
 	}
+	fmt.Println("Sorted Stack A:", stack.A)
 }
