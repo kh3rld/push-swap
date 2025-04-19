@@ -11,3 +11,9 @@ type Stack struct {
 	Next   *Stack
 	Prev   *Stack
 }
+
+// StackList manages stack operations
+type StackList struct {
+	top    *Stack
+	length int
+}
