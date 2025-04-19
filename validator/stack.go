@@ -101,3 +101,18 @@ func (s *StackList) FindMin() (int, bool) {
 	}
 	return min, true
 }
+
+// FindMax returns the maximum number in the stack
+func (s *StackList) FindMax() (int, bool) {
+	if s.IsEmpty() {
+		return 0, false
+	}
+
+	max := math.MinInt
+	for curr := s.top; curr != nil; curr = curr.Next {
+		if curr.Number > max {
+			max = curr.Number
+		}
+	}
+	return max, true
+}
