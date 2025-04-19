@@ -199,3 +199,34 @@ func SetTargetsA(a *StackList, b *StackList) {
 	}
 }
 
+func SetTargetsB(a *StackList, b *StackList) {
+	if a.IsEmpty() || b.IsEmpty() {
+		return
+	}
+
+	currentB := b.top
+	for currentB != nil {
+		bestMatchValue := math.MaxInt64
+		var targetNode *Stack
+
+		// Search through the stack for the target
+		currentA := a.top
+		for currentA != nil {
+			// Find closest smaller number
+			if currentA.Number > currentB.Number &&
+				currentA.Number < bestMatchValue {
+				bestMatchValue = currentA.Number
+				targetNode = currentA
+			}
+			currentA = currentA.Next
+		}
+
+		if bestMatchValue == math.MaxInt64 {
+			currentB.Target = FindMinNode(a)
+		} else {
+			currentB.Target = targetNode
+		}
+
+		currentB = currentB.Next
+	}
+}
