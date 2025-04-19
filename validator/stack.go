@@ -157,3 +157,13 @@ func (s *StackList) Index() {
 		index++
 	}
 }
+
+// IsSorted checks if the stack is sorted in ascending order
+func (s *StackList) IsSorted() bool {
+	for curr := s.top; curr != nil && curr.Next != nil; curr = curr.Next {
+		if curr.Number > curr.Next.Number {
+			return false
+		}
+	}
+	return true
+}
