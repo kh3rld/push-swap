@@ -147,3 +147,15 @@ func Prep(sl *StackList, node *Stack, option string) {
 		}
 	}
 }
+
+func Move_a(a *StackList, b *StackList) {
+	node := GetCheapest(a)
+	if node.Above && node.Target.Above {
+		rotate(a, b, node)
+	} else if !(node.Above) && !(node.Target.Above) {
+		reverse(a, b, node)
+	}
+	Prep(a, node, "a")
+	Prep(b, node.Target, "b")
+	PushToStack(b, a, "a")
+}
