@@ -22,3 +22,8 @@ type StackList struct {
 func NewStackList() *StackList {
 	return &StackList{}
 }
+
+// IsEmpty checks if the stack is empty
+func (s *StackList) IsEmpty() bool {
+	return s.length == 0
+}
