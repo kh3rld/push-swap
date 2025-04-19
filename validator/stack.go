@@ -102,6 +102,21 @@ func (s *StackList) FindMin() (int, bool) {
 	return min, true
 }
 
+// FindMinNode returns the node with the minimum number
+func FindMinNode(s *StackList) *Stack {
+	if s.IsEmpty() {
+		return nil
+	}
+
+	minNode := s.top
+	for curr := s.top; curr != nil; curr = curr.Next {
+		if curr.Number < minNode.Number {
+			minNode = curr
+		}
+	}
+	return minNode
+}
+
 // FindMax returns the maximum number in the stack
 func (s *StackList) FindMax() (int, bool) {
 	if s.IsEmpty() {
