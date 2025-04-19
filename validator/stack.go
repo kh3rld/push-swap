@@ -35,3 +35,17 @@ func (s *StackList) Peek() (*Stack, bool) {
 	}
 	return s.top, true
 }
+
+// Push adds a new node to the top of the stack
+func (s *StackList) Push(num int) *Stack {
+	node := &Stack{Number: num}
+
+	if s.top != nil {
+		node.Next = s.top
+		s.top.Prev = node
+	}
+	s.top = node
+	s.length++
+
+	return node
+}
