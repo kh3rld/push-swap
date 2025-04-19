@@ -17,3 +17,8 @@ type StackList struct {
 	top    *Stack
 	length int
 }
+
+// NewStackList creates and returns a new empty stack
+func NewStackList() *StackList {
+	return &StackList{}
+}
