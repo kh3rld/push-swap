@@ -187,3 +187,13 @@ func (s *StackList) SetCheapest() {
 		cheapest.Cheap = true
 	}
 }
+
+// GetCheapest returns the node marked as Cheap
+func GetCheapest(s *StackList) *Stack {
+	for curr := s.top; curr != nil; curr = curr.Next {
+		if curr.Cheap {
+			return curr
+		}
+	}
+	return nil
+}
