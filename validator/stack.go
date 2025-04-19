@@ -116,3 +116,14 @@ func (s *StackList) FindMax() (int, bool) {
 	}
 	return max, true
 }
+
+// Index assigns index and above/below midpoint info
+func (s *StackList) Index() {
+	mid := s.length / 2
+	index := 0
+	for curr := s.top; curr != nil; curr = curr.Next {
+		curr.Index = index
+		curr.Above = index <= mid
+		index++
+	}
+}
