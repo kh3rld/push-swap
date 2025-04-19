@@ -159,3 +159,8 @@ func Move_a(a *StackList, b *StackList) {
 	Prep(b, node.Target, "b")
 	PushToStack(b, a, "a")
 }
+
+func Move_b(a *StackList, b *StackList) {
+	Prep(a, b.top.Target, "a")
+	PushToStack(a, b, "b")
+}
