@@ -128,3 +128,22 @@ func rotate(a *StackList, b *StackList, node *Stack) {
 		b.Index()
 	}
 }
+
+// Prep function to position a specific node at the top of a stack
+func Prep(sl *StackList, node *Stack, option string) {
+	for sl.top.Number != node.Number {
+		if option == "a" {
+			if node.Above {
+				RotateStack(sl, "a")
+			} else {
+				ReverseRotateStack(sl, "a")
+			}
+		} else if option == "b" {
+			if node.Above {
+				RotateStack(sl, "b")
+			} else {
+				ReverseRotateStack(sl, "b")
+			}
+		}
+	}
+}
