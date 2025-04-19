@@ -65,3 +65,8 @@ func (s *StackList) Pop() (int, bool) {
 
 	return num, true
 }
+
+// Length returns the current stack length
+func (s *StackList) Length() int {
+	return s.length
+}
