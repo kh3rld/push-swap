@@ -167,3 +167,23 @@ func (s *StackList) IsSorted() bool {
 	}
 	return true
 }
+
+// SetCheapest marks the node with the lowest cost as Cheap
+func (s *StackList) SetCheapest() {
+	if s.IsEmpty() {
+		return
+	}
+
+	minCost := math.MaxInt
+	var cheapest *Stack
+
+	for curr := s.top; curr != nil; curr = curr.Next {
+		if curr.Cost < minCost {
+			minCost = curr.Cost
+			cheapest = curr
+		}
+	}
+	if cheapest != nil {
+		cheapest.Cheap = true
+	}
+}
