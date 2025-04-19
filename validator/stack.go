@@ -132,6 +132,21 @@ func (s *StackList) FindMax() (int, bool) {
 	return max, true
 }
 
+// FindMaxNode returns the node with the maximum number
+func FindMaxNode(s *StackList) *Stack {
+	if s.IsEmpty() {
+		return nil
+	}
+
+	maxNode := s.top
+	for curr := s.top; curr != nil; curr = curr.Next {
+		if curr.Number > maxNode.Number {
+			maxNode = curr
+		}
+	}
+	return maxNode
+}
+
 // Index assigns index and above/below midpoint info
 func (s *StackList) Index() {
 	mid := s.length / 2
