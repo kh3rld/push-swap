@@ -27,3 +27,11 @@ func NewStackList() *StackList {
 func (s *StackList) IsEmpty() bool {
 	return s.length == 0
 }
+
+// Peek returns the top node without removing it
+func (s *StackList) Peek() (*Stack, bool) {
+	if s.IsEmpty() {
+		return nil, false
+	}
+	return s.top, true
+}
