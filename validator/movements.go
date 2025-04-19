@@ -38,3 +38,9 @@ func SwitchFirstTwo(stack *StackList, option string) {
 		Moves = append(Moves, "sb")
 	}
 }
+
+func SwitchBothStacks(a, b *StackList) {
+	SwitchFirstTwo(a, "")
+	SwitchFirstTwo(b, "")
+	Moves = append(Moves, "ss")
+}
