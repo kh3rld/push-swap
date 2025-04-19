@@ -44,3 +44,22 @@ func SwitchBothStacks(a, b *StackList) {
 	SwitchFirstTwo(b, "")
 	Moves = append(Moves, "ss")
 }
+
+func RotateStack(a *StackList, option string) {
+	var arr []int
+	len := a.Length() - 1
+	temp, _ := a.Pop()
+	for i := 0; i <= len-1; i++ {
+		value, _ := a.Pop()
+		arr = append(arr, value)
+	}
+	a.Push(temp)
+	for i := len - 1; i >= 0; i-- {
+		a.Push(arr[i])
+	}
+	if option == "a" {
+		Moves = append(Moves, "ra")
+	} else if option == "b" {
+		Moves = append(Moves, "rb")
+	}
+}
