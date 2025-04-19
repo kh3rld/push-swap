@@ -230,3 +230,14 @@ func SetTargetsB(a *StackList, b *StackList) {
 		currentB = currentB.Next
 	}
 }
+
+func MinToTop(sl *StackList) {
+	node := FindMinNode(sl)
+	for sl.top.Number != node.Number {
+		if node.Above {
+			RotateStack(sl, "a")
+		} else {
+			ReverseRotateStack(sl, "a")
+		}
+	}
+}
