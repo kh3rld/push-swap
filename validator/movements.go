@@ -88,3 +88,11 @@ func Rrr(a *StackList, b *StackList) {
 	ReverseRotateStack(b, "")
 	Moves = append(Moves, "rrr")
 }
+
+func reverse(a *StackList, b *StackList, node *Stack) {
+	for b.top.Number != node.Target.Number && a.top.Number != node.Number {
+		Rrr(a, b)
+		a.Index()
+		b.Index()
+	}
+}
