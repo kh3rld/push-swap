@@ -2,7 +2,6 @@ package Validator
 
 import (
 	"fmt"
-	"math"
 )
 
 var Moves []string
@@ -102,4 +101,22 @@ func RotateTwoStacks(a *StackList, b *StackList) {
 	RotateStack(a, "")
 	RotateStack(b, "")
 	Moves = append(Moves, "rr")
+}
+
+func SetPrice(a, b *StackList) {
+	aLen := a.Length()
+	bLen := b.Length()
+	current := a.top
+	for current != nil {
+		current.Cost = current.Index
+		if !current.Above {
+			current.Cost = aLen - current.Index
+		}
+		if current.Above {
+			current.Cost += current.Target.Index
+		} else {
+			current.Cost += bLen - current.Target.Index
+		}
+		current = current.Next
+	}
 }
