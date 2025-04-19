@@ -63,3 +63,22 @@ func RotateStack(a *StackList, option string) {
 		Moves = append(Moves, "rb")
 	}
 }
+
+func ReverseRotateStack(a *StackList, option string) {
+	var arr []int
+	len := a.Length() - 1
+	for i := 0; i <= len-1; i++ {
+		value, _ := a.Pop()
+		arr = append(arr, value)
+	}
+	temp, _ := a.Pop()
+	for i := len - 1; i >= 0; i-- {
+		a.Push(arr[i])
+	}
+	a.Push(temp)
+	if option == "a" {
+		Moves = append(Moves, "rra")
+	} else if option == "b" {
+		Moves = append(Moves, "reb")
+	}
+}
