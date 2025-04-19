@@ -19,3 +19,22 @@ func PushToStack(dst, src *StackList, option string) {
 		Moves = append(Moves, "pa")
 	}
 }
+
+func SwitchFirstTwo(stack *StackList, option string) {
+	first, ok := stack.Pop()
+	if !ok {
+		return
+	}
+	second, ok := stack.Pop()
+	if !ok {
+		stack.Push(first)
+		return
+	}
+	stack.Push(first)
+	stack.Push(second)
+	if option == "a" {
+		Moves = append(Moves, "sa")
+	} else if option == "b" {
+		Moves = append(Moves, "sb")
+	}
+}
