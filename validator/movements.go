@@ -82,3 +82,9 @@ func ReverseRotateStack(a *StackList, option string) {
 		Moves = append(Moves, "reb")
 	}
 }
+
+func Rrr(a *StackList, b *StackList) {
+	ReverseRotateStack(a, "")
+	ReverseRotateStack(b, "")
+	Moves = append(Moves, "rrr")
+}
