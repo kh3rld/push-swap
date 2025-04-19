@@ -1,5 +1,10 @@
 package Validator
 
+import (
+	"fmt"
+	"math"
+)
+
 // Stack represents a node in the stack
 type Stack struct {
 	Number int
@@ -69,4 +74,15 @@ func (s *StackList) Pop() (int, bool) {
 // Length returns the current stack length
 func (s *StackList) Length() int {
 	return s.length
+}
+
+// Print prints all numbers in the stack
+func (s *StackList) Print() {
+	if s.IsEmpty() {
+		fmt.Println("Stack is empty")
+		return
+	}
+	for curr := s.top; curr != nil; curr = curr.Next {
+		fmt.Printf("{ Num-> %d } ", curr.Number)
+	}
 }
