@@ -2,6 +2,7 @@ package Validator
 
 import (
 	"fmt"
+	"math"
 )
 
 var Moves []string
@@ -95,4 +96,10 @@ func reverse(a *StackList, b *StackList, node *Stack) {
 		a.Index()
 		b.Index()
 	}
+}
+
+func RotateTwoStacks(a *StackList, b *StackList) {
+	RotateStack(a, "")
+	RotateStack(b, "")
+	Moves = append(Moves, "rr")
 }
