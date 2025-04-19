@@ -86,3 +86,18 @@ func (s *StackList) Print() {
 		fmt.Printf("{ Num-> %d } ", curr.Number)
 	}
 }
+
+// FindMin returns the minimum number in the stack
+func (s *StackList) FindMin() (int, bool) {
+	if s.IsEmpty() {
+		return 0, false
+	}
+
+	min := math.MaxInt
+	for curr := s.top; curr != nil; curr = curr.Next {
+		if curr.Number < min {
+			min = curr.Number
+		}
+	}
+	return min, true
+}
