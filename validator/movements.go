@@ -120,3 +120,11 @@ func SetPrice(a, b *StackList) {
 		current = current.Next
 	}
 }
+
+func rotate(a *StackList, b *StackList, node *Stack) {
+	for b.top.Number != node.Target.Number && a.top.Number != node.Number {
+		RotateTwoStacks(a, b)
+		a.Index()
+		b.Index()
+	}
+}
