@@ -2,6 +2,7 @@ package Validator
 
 import (
 	"fmt"
+	"math"
 )
 
 var Moves []string
@@ -164,3 +165,37 @@ func Move_b(a *StackList, b *StackList) {
 	Prep(a, b.top.Target, "a")
 	PushToStack(a, b, "b")
 }
+
+func SetTargetsA(a *StackList, b *StackList) {
+	if a.IsEmpty() || b.IsEmpty() {
+		return
+	}
+
+	currentA := a.top
+	for currentA != nil {
+		bestMatchValue := math.MinInt
+		var targetNode *Stack
+
+		// Search through the stack for the target
+		currentB := b.top
+		for currentB != nil {
+			// Find closest smaller number
+			if currentB.Number < currentA.Number &&
+				currentB.Number > bestMatchValue {
+				bestMatchValue = currentB.Number
+				targetNode = currentB
+			}
+			currentB = currentB.Next
+		}
+
+		// If no smaller number found, set target to max value node
+		if bestMatchValue == math.MinInt {
+			currentA.Target = FindMaxNode(b)
+		} else {
+			currentA.Target = targetNode
+		}
+
+		currentA = currentA.Next
+	}
+}
+
