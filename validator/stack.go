@@ -49,3 +49,19 @@ func (s *StackList) Push(num int) *Stack {
 
 	return node
 }
+
+// Pop removes and returns the number from the stack
+func (s *StackList) Pop() (int, bool) {
+	if s.IsEmpty() {
+		return 0, false
+	}
+
+	num := s.top.Number
+	s.top = s.top.Next
+	if s.top != nil {
+		s.top.Prev = nil
+	}
+	s.length--
+
+	return num, true
+}
