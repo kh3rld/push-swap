@@ -10,7 +10,7 @@ var instructions []string
 func PushSwap(s *Stack) []string {
 	// Helper functions for operations
 	swap := func(stack *[]int, instruction string) {
-		if len(*stack) >= 2 {
+		if len(*stack) > 1 {
 			(*stack)[0], (*stack)[1] = (*stack)[1], (*stack)[0]
 			instructions = append(instructions, instruction)
 		}
@@ -30,81 +30,63 @@ func PushSwap(s *Stack) []string {
 		}
 	}
 
-	pushAtoB := func() {
-		if len(s.A) > 0 && (len(s.B) == 0 || s.A[0] > s.B[len(s.B)-1]) {
-			instructions = append(instructions, "pb")
-			s.B = append(s.B, s.A[0])
-			s.A = s.A[1:]
+	push := func(from *[]int, to *[]int, instruction string) {
+		if len(*from) > 0 {
+			*to = append([]int{(*from)[0]}, *to...)
+			*from = (*from)[1:]
+			instructions = append(instructions, instruction)
 		}
 	}
 
-	// Function to push the top element of B to A
-	pushBtoA := func() {
-		if len(s.B) > 0 && (len(s.A) == 0 || s.B[0] > s.A[len(s.A)-1]) {
-			instructions = append(instructions, "pa")
-			s.A = append(s.A, s.B[len(s.B)-1])
-			s.B = s.B[:len(s.B)-1] // Remove the top element from B
+	// // Function to check if a stack is sorted
+	// isSorted := func(stack []int) bool {
+	// 	for i := 1; i < len(stack); i++ {
+	// 		if stack[i-1] > stack[i] {
+	// 			return false
+	// 		}
+	// 	}
+	// 	return true
+	// }
+
+	// Function to sort a small stack of 3 elements
+	sortThree := func(stack *[]int, prefix string) {
+		if len(*stack) < 2 {
+			return
+		}
+		if len(*stack) == 2 && (*stack)[0] > (*stack)[1] {
+			swap(stack, prefix+"s")
+			return
+		}
+		if (*stack)[0] > (*stack)[1] && (*stack)[0] > (*stack)[2] {
+			rotate(stack, prefix+"r")
+		} else if (*stack)[1] > (*stack)[2] {
+			reverseRotate(stack, prefix+"rr")
+		}
+		if (*stack)[0] > (*stack)[1] {
+			swap(stack, prefix+"s")
 		}
 	}
 
-	// Sort stack A using the defined instructions
-	for len(s.A) > 0 {
-		// Find the minimum element in stack A
-		minIndex := 0
-		for i := 1; i < len(s.A); i++ {
-			if s.A[i] < s.A[minIndex] {
-				minIndex = i
-			}
-		}
-
-		// Rotate to bring the minimum element to the top
-		if minIndex > 0 {
-			if minIndex <= len(s.A)/2 {
-				for i := 0; i < minIndex; i++ {
-					rotate(&s.A, "ra")
-				}
-			} else {
-				for i := 0; i < len(s.A)-minIndex; i++ {
-					reverseRotate(&s.A, "rra")
-				}
-			}
-		}
-		pushAtoB()
+	// Main sorting logic
+	if len(s.A) <= 3 {
+		sortThree(&s.A, "a")
+		return instructions
 	}
 
+	// Divide and conquer: Push elements to B
+	mid := len(s.A) / 2
+	for len(s.A) > mid {
+		push(&s.A, &s.B, "pb")
+	}
+
+	// Sort both halves
+	PushSwap(&Stack{A: s.A, B: []int{}})
+	PushSwap(&Stack{A: s.B, B: []int{}})
+
+	// Merge sorted halves back into A
 	for len(s.B) > 0 {
-		minIndex := 0
-		for i := 1; i < len(s.B); i++ {
-			if s.B[i] < s.B[minIndex] {
-				minIndex = i
-			}
-		}
+		push(&s.B, &s.A, "pa")
+	}
 
-		if minIndex > 0 {
-			if minIndex <= len(s.B)/2 {
-				for i := 0; i < minIndex; i++ {
-					rotate(&s.B, "rb")
-				}
-			} else {
-				for i := 0; i < len(s.B)-minIndex; i++ {
-					reverseRotate(&s.B, "rrb")
-				}
-			}
-		}
-
-		pushBtoA()
-	}
-	for len(s.A) > 0 && len(s.B) > 0 {
-		reverseRotate(&s.A, "rrr")
-		reverseRotate(&s.B, "rrr")
-		pushBtoA()
-	}
-	for i := 0; i < len(s.B)-1; i++ {
-		for j := 0; j < len(s.B)-i-1; j++ {
-			if s.B[j] > s.B[j+1] {
-				swap(&s.B, "sb")
-			}
-		}
-	}
 	return instructions
 }
