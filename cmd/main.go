@@ -5,6 +5,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+
 	"swap/sortStack"
 	"swap/validator"
 )
@@ -16,27 +17,27 @@ func main() {
 	arg := os.Args[1]
 
 	if !validator.Validate(arg) {
-		fmt.Println("Error")
+		fmt.Fprintln(os.Stderr, "Error")
 		return
 	}
 
+	// Parse input into stack A
 	values := strings.Split(arg, " ")
-	a := sortStack.NewStack()
-	b := sortStack.NewStack()
-
+	stack := &sortStack.Stack{A: []int{}, B: []int{}}
 	for _, v := range values {
-		data, err := strconv.Atoi(v)
+		num, err := strconv.Atoi(v)
 		if err != nil {
-			fmt.Println("Error")
+			fmt.Fprintln(os.Stderr, "Error")
 			return
 		}
-		a.Push(data)
+		stack.A = append(stack.A, num)
 	}
 
-	sortStack.SortS(a, b)
+	// Generate instructions using PushSwap
+	instructions := sortStack.PushSwap(stack)
 
-	for len(a.Data) > 0 {
-		value, _ := a.Pop()
-		fmt.Println(value)
+	// Output instructions
+	for _, instr := range instructions {
+		fmt.Println(instr)
 	}
 }
