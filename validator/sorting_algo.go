@@ -84,3 +84,21 @@ func Sort_stack(a *StackList) {
 	a.Index()
 	MinToTop(a)
 }
+
+// Set_a prepares stack 'a' to receive elements from stack 'b'
+// by setting targets and computing the cheapest move
+func Set_a(a *StackList, b *StackList) {
+	a.Index()
+	b.Index()
+	SetTargetsA(a, b)
+	SetPrice(a, b)
+	a.SetCheapest()
+}
+
+// Set_b prepares stack 'b' for pushing an element back to stack 'a'
+// by determining its optimal target location in 'a'
+func Set_b(a *StackList, b *StackList) {
+	a.Index()
+	b.Index()
+	SetTargetsB(a, b)
+}
