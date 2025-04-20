@@ -29,12 +29,12 @@ func TinySort(a *StackList) {
 			SwitchFirstTwo(a, "a")
 		}
 	} else if second.Number > first.Number && second.Number > third.Number {
-		ReverseRotateStack(a, "a") 
+		ReverseRotateStack(a, "a")
 		if first.Number > third.Number {
-			SwitchFirstTwo(a, "a") 
+			SwitchFirstTwo(a, "a")
 		}
 	} else if first.Number > second.Number {
-		SwitchFirstTwo(a, "a") 
+		SwitchFirstTwo(a, "a")
 	}
 
 	// Ensure the maximum number is placed correctly
@@ -51,3 +51,36 @@ func TinySort(a *StackList) {
 	}
 }
 
+// Sort_stack sorts the entire stack 'a' using stack 'b' as auxiliary.
+// It first pushes two elements to 'b', sorts the remaining in 'a',
+// and then reinserts elements from 'b' into their correct positions in 'a'.
+func Sort_stack(a *StackList) {
+	b := NewStackList()
+
+	// Push the first two smallest elements to 'b' for better control
+	if a.Length() > 3 && !a.IsSorted() {
+		PushToStack(b, a, "a")
+	}
+	if a.Length() > 3 && !a.IsSorted() {
+		PushToStack(b, a, "a")
+	}
+
+	// Continue moving elements from 'a' to 'b' strategically
+	for a.Length() > 3 && !a.IsSorted() {
+		Set_a(a, b)
+		Move_a(a, b)
+	}
+
+	// Sort the remaining 3 elements in 'a'
+	TinySort(a)
+
+	// Move all elements from 'b' back to 'a' in sorted order
+	for b.top != nil {
+		Set_b(a, b)
+		Move_b(a, b)
+	}
+
+	// Final indexing and bring the minimum to the top
+	a.Index()
+	MinToTop(a)
+}
