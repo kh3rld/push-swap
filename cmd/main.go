@@ -3,40 +3,39 @@ package main
 import (
 	"fmt"
 	"os"
-	"strconv"
 	"strings"
-	"swap/sortStack"
-	"swap/validator"
+
+	pushswap "swap/validator"
 )
 
 func main() {
-	if len(os.Args) < 2 {
+	args := os.Args[1:]
+	values, err := pushswap.ParseArgs(args)
+
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
 		return
 	}
-	arg := os.Args[1]
-
-	if !validator.Validate(arg) {
-		fmt.Println("Error")
+	if values == nil {
+		fmt.Println()
 		return
 	}
 
-	values := strings.Split(arg, " ")
-	a := sortStack.NewStack()
-	b := sortStack.NewStack()
+	stack := pushswap.NewStackList()
+	for _, val := range values {
+		stack.Push(val)
+	}
 
-	for _, v := range values {
-		data, err := strconv.Atoi(v)
-		if err != nil {
-			fmt.Println("Error")
-			return
+	if !stack.IsSorted() {
+		switch stack.Length() {
+		case 2:
+			pushswap.SwitchFirstTwo(stack, "a")
+		case 3:
+			pushswap.TinySort(stack)
+		default:
+			pushswap.Sort_stack(stack)
 		}
-		a.Push(data)
 	}
 
-	sortStack.SortS(a, b)
-
-	for len(a.Data) > 0 {
-		value, _ := a.Pop()
-		fmt.Println(value)
-	}
+	fmt.Println(strings.Join(pushswap.Moves, "\n"))
 }
