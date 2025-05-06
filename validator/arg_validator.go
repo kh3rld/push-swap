@@ -1,34 +1,11 @@
-package validator
+package Validator
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 )
 
-<<<<<<< HEAD
-func Validate(s string) bool {
-	str := strings.Fields(s)
-	var b bool
-	for _, x := range str {
-		num, err := strconv.Atoi(x)
-		if err != nil {
-			return false
-		}
-		b = !Duplicate(strconv.Itoa(num))
-	}
-	return b
-}
-
-func Duplicate(s string) bool {
-	seen := make(map[rune]bool)
-	for _, c := range s {
-		if seen[c] {
-			return true
-		}
-		seen[c] = true
-	}
-	return false
-=======
 // parseArgs validates and parses the command-line argument,
 // returning a slice of unique integers in reverse order.
 func ParseArgs(args []string) ([]int, error) {
@@ -36,7 +13,7 @@ func ParseArgs(args []string) ([]int, error) {
 		return nil, fmt.Errorf("Error")
 	}
 	if len(args) == 0 || args[0] == "" {
-		return nil, nil 
+		return nil, nil
 	}
 
 	input := args[0]
@@ -57,5 +34,4 @@ func ParseArgs(args []string) ([]int, error) {
 	}
 
 	return result, nil
->>>>>>> 2bb8de6492297fe6b7d4f4bd302776566bf66bd5
 }
