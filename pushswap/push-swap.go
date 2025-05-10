@@ -11,7 +11,6 @@ import (
 func main() {
 	args := os.Args[1:]
 	values, err := pushswap.ParseArgs(args)
-
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		return
@@ -34,6 +33,8 @@ func main() {
 		default:
 			pushswap.Sort_stack(stack)
 		}
+	} else {
+		return
 	}
 
 	fmt.Println(strings.Join(pushswap.Moves, "\n"))
