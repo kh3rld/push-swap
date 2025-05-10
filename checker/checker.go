@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-// Stack operations
+// Instruction operations
 func sa(a *[]int) {
 	if len(*a) >= 2 {
 		(*a)[0], (*a)[1] = (*a)[1], (*a)[0]
@@ -59,13 +59,15 @@ func rr(a, b *[]int) {
 
 func rra(a *[]int) {
 	if len(*a) > 1 {
-		*a = append([]int{(*a)[len(*a)-1]}, (*a)[:len(*a)-1]...)
+		last := (*a)[len(*a)-1]
+		*a = append([]int{last}, (*a)[:len(*a)-1]...)
 	}
 }
 
 func rrb(b *[]int) {
 	if len(*b) > 1 {
-		*b = append([]int{(*b)[len(*b)-1]}, (*b)[:len(*b)-1]...)
+		last := (*b)[len(*b)-1]
+		*b = append([]int{last}, (*b)[:len(*b)-1]...)
 	}
 }
 
@@ -74,15 +76,8 @@ func rrr(a, b *[]int) {
 	rrb(b)
 }
 
-// Check if a slice is sorted in ascending order
 func isSorted(a []int) bool {
-	if len(a) == 0 {
-		return true
-	}
 	for i := 0; i < len(a)-1; i++ {
-		if i+1 >= len(a) {
-			return false
-		}
 		if a[i] > a[i+1] {
 			return false
 		}
@@ -114,7 +109,10 @@ func main() {
 	// Read instructions from stdin
 	scanner := bufio.NewScanner(os.Stdin)
 	for scanner.Scan() {
-		inst := scanner.Text()
+		inst := strings.TrimSpace(scanner.Text())
+		if inst == "" {
+			continue
+		}
 		switch inst {
 		case "sa":
 			sa(&stackA)
