@@ -27,7 +27,7 @@ func ParseArgs(args []string) ([]int, error) {
 			return nil, fmt.Errorf("Error")
 		}
 		if seen[num] {
-			return nil, fmt.Errorf("error: there are duplicates")
+			return nil, fmt.Errorf("Error")
 		}
 		seen[num] = true
 		result = append(result, num)
