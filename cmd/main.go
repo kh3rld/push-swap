@@ -36,9 +36,26 @@ func main() {
 	if isSorted(stack.A) {
 		return
 	}
-	args := strings.Split(os.Args[1], " ")
-	for _, v := range args {
-		arg, err := strconv.Atoi(v)
+	// Generate and print sorting instructions
+	instructions := solve(stack)
+	for _, instr := range instructions {
+		fmt.Println(instr)
+	}
+}
+
+func parseInput(input string) (*Stack, error) {
+	values := strings.Fields(input)
+	if len(values) == 0 {
+		return nil, fmt.Errorf("empty input")
+	}
+
+	stack := &Stack{
+		A: make([]int, 0, len(values)),
+		B: make([]int, 0, len(values)),
+	}
+
+	for _, v := range values {
+		num, err := strconv.Atoi(v)
 		if err != nil {
 			return nil, err
 		}
