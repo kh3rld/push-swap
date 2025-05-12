@@ -193,3 +193,38 @@ func TestFindMedian(t *testing.T) {
 		})
 	}
 }
+
+// Test the SortLargeOptimized function
+func TestSortLargeOptimized(t *testing.T) {
+	tests := []struct {
+		name     string
+		input    []int
+		expected []int
+	}{
+		{"Already sorted", []int{1, 2, 3, 4, 5, 6}, []int{1, 2, 3, 4, 5, 6}},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			stack := &Stack{
+				A: append([]int(nil), tt.input...), // Copy input
+				B: []int{},
+			}
+			sortLargeOptimized(stack)
+
+			if len(stack.A) != len(tt.expected) {
+				t.Errorf("Expected length %d, got %d", len(tt.expected), len(stack.A))
+				return
+			}
+			for i := range stack.A {
+				if stack.A[i] != tt.expected[i] {
+					t.Errorf("After sorting, got %v; expected %v", stack.A, tt.expected)
+					break
+				}
+			}
+			if len(stack.B) != 0 {
+				t.Errorf("Expected stack B to be empty, got %v", stack.B)
+			}
+		})
+	}
+}
