@@ -135,3 +135,29 @@ func TestFindMin(t *testing.T) {
 		})
 	}
 }
+
+// Test the function to find the index
+func TestFindIndex(t *testing.T) {
+	tests := []struct {
+		name     string
+		input    []int
+		val      int
+		expected int
+	}{
+		{"Found at start", []int{5, 2, 3}, 5, 0},
+		{"Found in middle", []int{1, 9, 7, 4}, 7, 2},
+		{"Found at end", []int{10, 20, 30}, 30, 2},
+		{"Not found", []int{2, 4, 6}, 5, -1},
+		{"Empty slice", []int{}, 3, -1},
+		{"Multiple occurrences", []int{1, 2, 3, 2}, 2, 1}, // should return first match
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result := findIndex(tt.input, tt.val)
+			if result != tt.expected {
+				t.Errorf("findIndex(%v, %d) = %d; expected %d", tt.input, tt.val, result, tt.expected)
+			}
+		})
+	}
+}
