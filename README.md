@@ -51,3 +51,10 @@ go build -o checker ./checker.go
 ```bash
 ./checker "3 2 1 0" //input your stack here
 ```
+
+### 4. General usage:
+
+```bash
+ARG="4 67 3 87 23"; ./push-swap "$ARG" | wc -l              //gives the word count of the number of instructions used to sort the stack.
+ARG="4 67 3 87 23"; ./push-swap "$ARG" | ./checker "$ARG"   //gives the OK if the checker passes and KO if the checker fails.
+```
