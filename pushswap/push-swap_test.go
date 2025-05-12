@@ -61,3 +61,27 @@ func TestHasDuplicates(t *testing.T) {
 		}
 	}
 }
+
+// Test function to check if the stack is already sorted
+func TestIsSorted(t *testing.T) {
+	tests := []struct {
+		input    []int
+		expected bool
+	}{
+		{[]int{}, true},             // empty list is considered sorted
+		{[]int{1}, true},            // single element is sorted
+		{[]int{1, 2, 3, 4}, true},   // strictly increasing
+		{[]int{1, 2, 2, 3}, true},   // non-decreasing
+		{[]int{5, 3, 2, 1}, false},  // descending
+		{[]int{1, 3, 2}, false},     // out of order in the middle
+		{[]int{-5, -2, 0, 3}, true}, // sorted with negatives
+		{[]int{-1, -1, -1}, true},   // all equal
+	}
+
+	for _, tt := range tests {
+		result := isSorted(tt.input)
+		if result != tt.expected {
+			t.Errorf("isSorted(%v) = %v; want %v", tt.input, result, tt.expected)
+		}
+	}
+}
