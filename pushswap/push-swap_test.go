@@ -2,6 +2,7 @@ package main
 
 import (
 	"reflect"
+	"sort"
 	"testing"
 )
 
@@ -157,6 +158,37 @@ func TestFindIndex(t *testing.T) {
 			result := findIndex(tt.input, tt.val)
 			if result != tt.expected {
 				t.Errorf("findIndex(%v, %d) = %d; expected %d", tt.input, tt.val, result, tt.expected)
+			}
+		})
+	}
+}
+
+// Test the function for finding median
+func TestFindMedian(t *testing.T) {
+	tests := []struct {
+		name     string
+		input    []int
+		expected int
+	}{
+		{"Odd number of elements", []int{3, 1, 2}, 2},
+		{"Even number of elements", []int{4, 1, 3, 2}, 3}, // upper middle in sorted: [1 2 3 4]
+		{"Single element", []int{7}, 7},
+		{"Negative numbers", []int{-5, -1, -3}, -3},
+		{"Already sorted", []int{1, 2, 3, 4, 5}, 3},
+		{"Duplicates", []int{1, 2, 2, 2, 3}, 2},
+		{"Large set", []int{10, 5, 8, 3, 7, 6, 9}, 7},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result := findMedian(tt.input)
+
+			sorted := make([]int, len(tt.input))
+			copy(sorted, tt.input)
+			sort.Ints(sorted)
+
+			if result != sorted[len(sorted)/2] {
+				t.Errorf("findMedian(%v) = %d; expected %d", tt.input, result, tt.expected)
 			}
 		})
 	}
