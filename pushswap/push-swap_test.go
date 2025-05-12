@@ -39,3 +39,25 @@ func TestParseInput(t *testing.T) {
 		}
 	}
 }
+
+// Test function to check for duplicate alues in the stack
+func TestHasDuplicates(t *testing.T) {
+	tests := []struct {
+		input    []int
+		expected bool
+	}{
+		{[]int{1, 2, 3, 4}, false},
+		{[]int{1, 2, 3, 1}, true},
+		{[]int{}, false},
+		{[]int{0, 0}, true},
+		{[]int{-1, -2, -3}, false},
+		{[]int{-1, -2, -1}, true},
+	}
+
+	for _, tt := range tests {
+		result := hasDuplicates(tt.input)
+		if result != tt.expected {
+			t.Errorf("hasDuplicates(%v) = %v; want %v", tt.input, result, tt.expected)
+		}
+	}
+}
