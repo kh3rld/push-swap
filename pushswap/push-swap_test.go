@@ -85,3 +85,28 @@ func TestIsSorted(t *testing.T) {
 		}
 	}
 }
+
+// Test the function to finding the maximum value in the stack
+func TestFindMax(t *testing.T) {
+	tests := []struct {
+		name     string
+		input    []int
+		expected int
+	}{
+		{"Single element", []int{5}, 5},
+		{"All positive", []int{3, 1, 4, 2}, 4},
+		{"All negative", []int{-3, -7, -1, -2}, -1},
+		{"Mixed values", []int{10, -2, 0, 4}, 10},
+		{"Max at end", []int{9, 8, 7, 12}, 12},
+		{"Max at start", []int{100, 3, 4, 5}, 100},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result := findMax(tt.input)
+			if result != tt.expected {
+				t.Errorf("findMax(%v) = %d; expected %d", tt.input, result, tt.expected)
+			}
+		})
+	}
+}
