@@ -292,3 +292,58 @@ func findMaxIndex(nums []int) int {
 	}
 	return maxIndex
 }
+
+func rotateToTop(s *Stack, instructions *[]string, index int, stackName string) {
+	var stack *[]int
+	var rot, revRot string
+
+	if stackName == "A" {
+		stack = &s.A
+		rot, revRot = "ra", "rra"
+	} else {
+		stack = &s.B
+		rot, revRot = "rb", "rrb"
+	}
+
+	n := len(*stack)
+	if index <= n/2 {
+		for i := 0; i < index; i++ {
+			*instructions = append(*instructions, rot)
+			rotate(stack)
+		}
+	} else {
+		for i := 0; i < n-index; i++ {
+			*instructions = append(*instructions, revRot)
+			reverseRotate(stack)
+		}
+	}
+}
+
+func rotate(stack *[]int) {
+	if len(*stack) == 0 {
+		return
+	}
+	*stack = append((*stack)[1:], (*stack)[0])
+}
+
+func reverseRotate(stack *[]int) {
+	if len(*stack) == 0 {
+		return
+	}
+	last := len(*stack) - 1
+	*stack = append([]int{(*stack)[last]}, (*stack)[:last]...)
+}
+
+func swap(stack *[]int) {
+	if len(*stack) >= 2 {
+		(*stack)[0], (*stack)[1] = (*stack)[1], (*stack)[0]
+	}
+}
+
+func push(src *[]int, dst *[]int) {
+	if len(*src) == 0 {
+		return
+	}
+	*dst = append([]int{(*src)[0]}, *dst...)
+	*src = (*src)[1:]
+}
