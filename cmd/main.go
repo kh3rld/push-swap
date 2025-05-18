@@ -43,3 +43,29 @@ func hasDuplicates(nums []int) bool {
 	}
 	return false
 }
+
+func isSorted(nums []int) bool {
+	for i := 1; i < len(nums); i++ {
+		if nums[i-1] > nums[i] {
+			return false
+		}
+	}
+	return true
+}
+
+func solve(s *Stack) []string {
+	switch len(s.A) {
+	case 0, 1:
+		return []string{}
+	case 2:
+		return sortTwo(s)
+	case 3:
+		return sortThree(s)
+	case 4, 5:
+		return sortFive(s)
+	case 6:
+		return sortSix(s)
+	default:
+		return optimizedRadixSort(s)
+	}
+}
