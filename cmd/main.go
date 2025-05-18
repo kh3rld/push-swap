@@ -242,3 +242,53 @@ func addRotateA(s *Stack, instructions *[]string, count int) {
 		rotate(&s.A)
 	}
 }
+
+func findMin(nums []int) int {
+	minVal := nums[0]
+	for _, num := range nums {
+		if num < minVal {
+			minVal = num
+		}
+	}
+	return minVal
+}
+
+func findMax(nums []int) int {
+	maxVal := nums[0]
+	for _, num := range nums {
+		if num > maxVal {
+			maxVal = num
+		}
+	}
+	return maxVal
+}
+
+func max(a, b, c int) int {
+	if a >= b && a >= c {
+		return a
+	}
+	if b >= a && b >= c {
+		return b
+	}
+	return c
+}
+
+func findMinIndex(nums []int) int {
+	minIndex := 0
+	for i := 1; i < len(nums); i++ {
+		if nums[i] < nums[minIndex] {
+			minIndex = i
+		}
+	}
+	return minIndex
+}
+
+func findMaxIndex(nums []int) int {
+	maxIndex := 0
+	for i := 1; i < len(nums); i++ {
+		if nums[i] > nums[maxIndex] {
+			maxIndex = i
+		}
+	}
+	return maxIndex
+}
