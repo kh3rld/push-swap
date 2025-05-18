@@ -69,3 +69,10 @@ func solve(s *Stack) []string {
 		return optimizedRadixSort(s)
 	}
 }
+
+func sortTwo(s *Stack) []string {
+	if s.A[0] > s.A[1] {
+		return []string{"sa"}
+	}
+	return []string{}
+}
