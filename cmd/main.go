@@ -228,3 +228,17 @@ func correctNegatives(s *Stack, instructions *[]string, offset int) {
 		s.A[i] -= offset
 	}
 }
+
+func addReverseRotateA(s *Stack, instructions *[]string, count int) {
+	for i := 0; i < count; i++ {
+		*instructions = append(*instructions, "rra")
+		reverseRotate(&s.A)
+	}
+}
+
+func addRotateA(s *Stack, instructions *[]string, count int) {
+	for i := 0; i < count; i++ {
+		*instructions = append(*instructions, "ra")
+		rotate(&s.A)
+	}
+}
