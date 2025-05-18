@@ -12,6 +12,32 @@ type Stack struct {
 	B []int
 }
 
+func main() {
+	if len(os.Args) < 2 {
+		return
+	}
+
+	stack, err := parseInput(os.Args[1])
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "Error")
+		return
+	}
+
+	if hasDuplicates(stack.A) {
+		fmt.Fprintln(os.Stderr, "Error")
+		return
+	}
+
+	if isSorted(stack.A) {
+		return
+	}
+
+	instructions := solve(stack)
+	for _, instr := range instructions {
+		fmt.Println(instr)
+	}
+}
+
 func parseInput(input string) (*Stack, error) {
 	values := strings.Fields(input)
 	if len(values) == 0 {
