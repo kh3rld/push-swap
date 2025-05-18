@@ -98,3 +98,43 @@ func sortThree(s *Stack) []string {
 	}
 	return instructions
 }
+
+func sortFive(s *Stack) []string {
+	var instructions []string
+	for i := 0; i < 2; i++ {
+		minIndex := findMinIndex(s.A)
+		rotateToTop(s, &instructions, minIndex, "A")
+		instructions = append(instructions, "pb")
+		push(&s.A, &s.B)
+	}
+
+	instructions = append(instructions, sortThree(s)...)
+
+	for len(s.B) > 0 {
+		maxIndex := findMaxIndex(s.B)
+		rotateToTop(s, &instructions, maxIndex, "B")
+		instructions = append(instructions, "pa")
+		push(&s.B, &s.A)
+	}
+	return instructions
+}
+
+func sortSix(s *Stack) []string {
+	var instructions []string
+	for i := 0; i < 3; i++ {
+		minIndex := findMinIndex(s.A)
+		rotateToTop(s, &instructions, minIndex, "A")
+		instructions = append(instructions, "pb")
+		push(&s.A, &s.B)
+	}
+
+	instructions = append(instructions, sortThree(s)...)
+
+	for len(s.B) > 0 {
+		maxIndex := findMaxIndex(s.B)
+		rotateToTop(s, &instructions, maxIndex, "B")
+		instructions = append(instructions, "pa")
+		push(&s.B, &s.A)
+	}
+	return instructions
+}
