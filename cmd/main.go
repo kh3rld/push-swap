@@ -138,3 +138,93 @@ func sortSix(s *Stack) []string {
 	}
 	return instructions
 }
+
+func optimizedRadixSort(s *Stack) []string {
+	var instructions []string
+	offset := adjustNegatives(s.A)
+	maxBits := calculateMaxBits(s.A)
+	currentStack := "A"
+
+	for bit := 0; bit < maxBits; bit++ {
+		if currentStack == "A" {
+			count := len(s.A)
+			for i := 0; i < count; i++ {
+				num := s.A[0]
+				if ((num+offset)>>bit)&1 == 0 {
+					instructions = append(instructions, "pb")
+					push(&s.A, &s.B)
+				} else {
+					instructions = append(instructions, "ra")
+					rotate(&s.A)
+				}
+			}
+			currentStack = "B"
+		} else {
+			count := len(s.B)
+			for i := 0; i < count; i++ {
+				num := s.B[0]
+				if ((num+offset)>>bit)&1 == 0 {
+					instructions = append(instructions, "pa")
+					push(&s.B, &s.A)
+				} else {
+					instructions = append(instructions, "rb")
+					rotate(&s.B)
+				}
+			}
+			currentStack = "A"
+		}
+	}
+
+	if currentStack == "B" {
+		for len(s.B) > 0 {
+			instructions = append(instructions, "pa")
+			push(&s.B, &s.A)
+		}
+	}
+
+	correctNegatives(s, &instructions, offset)
+	return instructions
+}
+
+func adjustNegatives(nums []int) int {
+	minVal := findMin(nums)
+	if minVal >= 0 {
+		return 0
+	}
+	offset := -minVal
+	for i := range nums {
+		nums[i] += offset
+	}
+	return offset
+}
+
+func calculateMaxBits(nums []int) int {
+	maxVal := findMax(nums)
+	bits := 0
+	for maxVal > 0 {
+		bits++
+		maxVal >>= 1
+	}
+	return bits + 1
+}
+
+func correctNegatives(s *Stack, instructions *[]string, offset int) {
+	if offset == 0 {
+		return
+	}
+	splitIndex := 0
+	for splitIndex < len(s.A) && s.A[splitIndex] >= offset {
+		splitIndex++
+	}
+	if splitIndex > 0 {
+		rotateCount := splitIndex
+		if rotateCount <= len(s.A)/2 {
+			addReverseRotateA(s, instructions, rotateCount)
+		} else {
+			addRotateA(s, instructions, len(s.A)-rotateCount)
+		}
+	}
+	for i := range s.A {
+		s.A[i] -= offset
+	}
+}
