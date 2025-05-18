@@ -76,3 +76,25 @@ func sortTwo(s *Stack) []string {
 	}
 	return []string{}
 }
+
+func sortThree(s *Stack) []string {
+	var instructions []string
+	a, b, c := s.A[0], s.A[1], s.A[2]
+
+	if a < b && b < c {
+		return []string{}
+	}
+
+	if a == max(a, b, c) {
+		instructions = append(instructions, "ra")
+		rotate(&s.A)
+	} else if b == max(a, b, c) {
+		instructions = append(instructions, "rra")
+		reverseRotate(&s.A)
+	}
+
+	if s.A[0] > s.A[1] {
+		instructions = append(instructions, "sa")
+	}
+	return instructions
+}
